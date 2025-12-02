@@ -1,0 +1,12 @@
+```
+{
+    email = env.CADDY_EMAIL
+}
+
+:443 {
+    reverse_proxy http://synapse:8008
+    tls {
+        dns cloudflare
+    }
+}
+```

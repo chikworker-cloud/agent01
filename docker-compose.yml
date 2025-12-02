@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  synapse:
+    image: matrixdotorg/synapse:latest
+    environment:
+      - $(cat .env)
+    ports:
+      - "8008:8008"
+    networks:
+      - default
+
+  caddy:
+    image: caddy:2
+    depends_on:
+      - synapse
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - /data/certs:/root/.local/share/caddy
+    networks:
+      - default
